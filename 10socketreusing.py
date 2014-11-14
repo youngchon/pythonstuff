@@ -1,0 +1,36 @@
+#!/usr/bin/env python
+#utilizing socketaddress
+
+import socket
+import sys
+
+def reuseSocketAddr():
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    #get old state of the so_reuseaddr opton
+    old = s.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR)
+    print("Old sock state: %s" %old)
+
+    s.setsockopt( socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    new = s.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR )
+    print("New sock state: %s" %new)
+
+    localPort = 8282
+
+    srv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    srv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    srv.bind( ('', localPort))
+    srv.listen(1)
+    print("Listening on port: %s" %localPort)
+    
+    while True:
+        try:
+            connection, addr = srv.accept()
+            print("connected by %s:%s" %(addr[0], addr[1]))
+        except KeyboardInterrupt:
+            break
+        except socket.error as msg:
+            print("%s" %msg)
+
+if __name__ == '__main__':
+    reuseSocketAddr()
