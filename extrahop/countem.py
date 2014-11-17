@@ -20,7 +20,7 @@
 
 import sys
 
-def count(file):
+def countem(file):
     numlines = 0
     multiline = False
 
@@ -56,7 +56,7 @@ def count(file):
 
 if __name__ == '__main__':
     file = sys.argv[1]
-    count(file)
+    countem(file)
              
         
         
