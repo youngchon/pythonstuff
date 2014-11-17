@@ -18,3 +18,7 @@ line 1
 nextto it
 * not next to it
 */
+last test /* is this
+code block
+test */
+should be 8 lines
